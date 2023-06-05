@@ -28,7 +28,11 @@ class Program
         int charCount = int.Parse(Console.ReadLine());
         int digitCount = int.Parse(Console.ReadLine());
 
-        List<string> productNameList = new List<string>();
+        int maxProductCount = (int)(Math.Pow(26, charCount) * Math.Pow(10, digitCount));
+
+        string[] productNameArray = new string[maxProductCount];
+        int productId = 0;
+        int maxProductId = productId;
         string productName;
 
         while(true)
@@ -40,16 +44,27 @@ class Program
             }
             else
             {
-                productNameList.Add(productName);
+                productNameArray[productId] = productName;
+                productId++;
+            }
+
+            if(maxProductId < productId)
+            {
+                maxProductId = productId;
+            }
+
+            if(productId >= maxProductCount)
+            {
+                productId = 0;
             }
         }
 
-        string productCode = Console.ReadLine();
-        int productId = ConvertProductCodeToId(charCount, digitCount, productCode);
+        string checkProductCode = Console.ReadLine();
+        int checkProductId = ConvertProductCodeToId(charCount, digitCount, checkProductCode);
         
-        if(productId >= 0 && productId < productNameList.Count)
+        if(checkProductId >= 0 && checkProductId < maxProductId)
         {
-            Console.WriteLine(productNameList[productId]);
+            Console.WriteLine(productNameArray[checkProductId]);
         }
         else
         {
